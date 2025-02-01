@@ -8,6 +8,10 @@ requirements = []
 path = "contracts/community-manager.clar"
 depends_on = []
 
+[contracts.content-manager]
+path = "contracts/content-manager.clar"
+depends_on = []
+
 [repl]
 costs_version = 2
 parser_version = 2
