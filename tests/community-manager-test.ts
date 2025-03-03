@@ -43,3 +43,23 @@ Clarinet.test({
     assertEquals(block.receipts[1].result.expectOk(), true);
   },
 });
+
+Clarinet.test({
+  name: "Ensure cannot join community twice",
+  async fn(chain: Chain, accounts: Map<string, Account>) {
+    const wallet_1 = accounts.get("wallet_1")!;
+    
+    let block = chain.mineBlock([
+      Tx.contractCall("community-manager", "create-community", 
+        [types.utf8("Test Community")], 
+        wallet_1.address
+      ),
+      Tx.contractCall("community-manager", "join-community",
+        [types.uint(1)],
+        wallet_1.address
+      )
+    ]);
+    
+    assertEquals(block.receipts[1].result.expectErr(), "u103");
+  },
+});
